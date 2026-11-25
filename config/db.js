@@ -7,10 +7,19 @@ const connectDB = async () => {
   try {
     if (!pool) {
       pool = mysql.createPool({
-        host: process.env.MYSQL_HOST,
-        user: process.env.MYSQL_USER,
-        password: process.env.MYSQL_PASSWORD,
-        database: process.env.MYSQL_DB,
+
+        // For live
+        host: process.env.DB_HOST,
+        port: Number(process.env.DB_PORT),
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+
+        //        for local
+        // host: process.env.MYSQL_HOST,
+        // user: process.env.MYSQL_USER,
+        // password: process.env.MYSQL_PASSWORD,
+        // database: process.env.MYSQL_DB,
         waitForConnections: true,
         connectionLimit: 10,
         queueLimit: 0
