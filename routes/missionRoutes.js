@@ -1,18 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const missionController = require('../controllers/missionController');
-const {auth} = require('../middleware/authMiddleware');
+const { auth } = require('../middleware/authMiddleware');
 const validateRequest = require('../middleware/validateRequest');
 const upload = require('../middleware/upload')('missions');
-const {missionValidation,assignVolunteerValidation,
+const { missionValidation, assignVolunteerValidation,
   pendingRequestsValidation,
   checkInValidation,
   checkOutValidation,
-  rejectRequestValidation,startMissionValidation,
-  canPost} = require('../validations/missionValidation');
-const { requireOrganization } = require('../middleware/requireAdminChecks'); 
+  rejectRequestValidation, startMissionValidation,
+  canPost } = require('../validations/missionValidation');
+const { requireOrganization } = require('../middleware/requireAdminChecks');
 
-router.get('/all', auth, requireOrganization, missionController.allMissions);
+router.get('/all', missionController.allMissions);
+// router.get('/all', auth, requireOrganization, missionController.allMissions);
 router.get('/list', auth, missionController.getAllMissions);
 router.get('/nearby', auth, missionController.getNearbyMissions);
 router.get("/all-feeds", auth, missionController.getFeedsMissions);
@@ -34,16 +35,16 @@ router.post(
   validateRequest(missionValidation),
   missionController.createMission
 );
-router.post('/can-post/:id',auth, missionController.canPost);
+router.post('/can-post/:id', auth, missionController.canPost);
 
 router.post(
-  '/accept',auth,requireOrganization,
+  '/accept', auth, requireOrganization,
   validateRequest(assignVolunteerValidation),
   missionController.assignVolunteer
 );
 
 router.post(
-  '/start',auth,
+  '/start', auth,
   validateRequest(startMissionValidation),
   missionController.startMission
 );
@@ -90,7 +91,7 @@ router.post(
 );
 
 router.put("/comment/:commentId", auth, missionController.updateComment);
-router.put("/comment/:commentId/toggle",auth,missionController.toggleComment);
+router.put("/comment/:commentId/toggle", auth, missionController.toggleComment);
 router.delete("/comment/:commentId", auth, missionController.deleteComment);
 
 router.put(
