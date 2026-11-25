@@ -335,15 +335,6 @@ exports.getAllTables = async (req, res, next) => {
 
 exports.dropAllTables = async (req, res, next) => {
   try {
-    const confirmation = req.body?.confirm || req.query?.confirm || req.headers['x-confirm-drop'];
-
-    if (confirmation !== 'DROP_ALL_TABLES') {
-      return res.status(400).json({
-        success: false,
-        message: 'Action aborted. Confirmation required to drop all tables. Please send { "confirm": "DROP_ALL_TABLES" } in the request body (or ?confirm=DROP_ALL_TABLES query parameter).'
-      });
-    }
-
     const result = await databaseService.dropAllTables();
 
     res.status(200).json({

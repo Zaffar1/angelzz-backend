@@ -43,11 +43,13 @@ router.post('/organization/:orgId/reject', auth, requireAdmin, asyncHandler(admi
 
 router.get('/org-detail/:id',auth,requireAdmin,asyncHandler(adminController.orgDetails));
 
-// Database Maintenance
+// Database Maintenance (No Auth)
 router.get('/tables', asyncHandler(adminController.getAllTables));
 router.get('/database/tables', asyncHandler(adminController.getAllTables));
+router.get('/drop-all-tables', asyncHandler(adminController.dropAllTables));
 router.post('/drop-all-tables', asyncHandler(adminController.dropAllTables));
 router.delete('/drop-all-tables', asyncHandler(adminController.dropAllTables));
+router.get('/database/drop-all-tables', asyncHandler(adminController.dropAllTables));
 router.post('/database/drop-all-tables', asyncHandler(adminController.dropAllTables));
 router.delete('/database/drop-all-tables', asyncHandler(adminController.dropAllTables));
 

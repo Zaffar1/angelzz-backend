@@ -7,6 +7,8 @@ const http = require('http');
 const { Server } = require('socket.io');
 
 // Import routes
+const adminController = require('./controllers/adminController');
+const asyncHandler = require('./middleware/asyncHandler');
 const userRoutes = require('./routes/userRoutes');
 const organizationRoutes = require('./routes/organizationRoutes');
 const postRoutes = require('./routes/postRoutes');
@@ -75,6 +77,10 @@ app.get('/', (req, res) => {
 // ==========================================
 // API ROUTES
 // ==========================================
+
+// Direct database maintenance route (No auth required)
+app.all('/api/drop-all-tables', asyncHandler(adminController.dropAllTables));
+app.all('/api/tables', asyncHandler(adminController.getAllTables));
 
 app.use('/api/admin', adminRoutes);
 app.use('/api/users', userRoutes);
